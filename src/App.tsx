@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-empty */
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import ReactQuill from "react-quill";
 
 const modules = {
@@ -11,25 +12,39 @@ const modules = {
 };
 
 function App() {
-  /* styles, height, defaultValue, placeholder */
+    const [height, setHeight] = useState('200px');
+    const [placeholder, setPlaceholder] = useState('Type your message here');
+    const [value, setValue] = useState('');
+    const [styles, setStyles] = useState({});
 
-  // const [query] = useSearchParams();
-    const [value, setValue] = useState<string>('');
-    // const content = query.get('value') || '';
-    // const height = query.get('height') || 150;
+    const params = new URLSearchParams(document.location.search);
+    const _value = params.get("value");
+    const _height = params.get("height");
+    const _placeholder = params.get("placeholder");
+    const _styles = params.get("styles");
 
-    // useLayoutEffect(() => {
-    //     setValue(content);
-    // }, [content]);
+     useLayoutEffect(() => {
+        setValue(_value || '');
+        setPlaceholder(_placeholder || 'Type your message here');
+        setHeight(_height || '200px');
+        try{
+          if(_styles){
+            setStyles(JSON.parse(_styles));
+          }
+        }
+        catch(_){}
+    }, []);
+
+
     const handleChange = (value: string) => {
         try {
-            window.postMessage(value);
-            // window?.ReactNativeWebView?.postMessage(value);
+          window.postMessage(value);
+          window?.ReactNativeWebView?.postMessage(value);
         } catch (_) {}
         setValue(value);
     };
 
-    return <ReactQuill  modules={modules} value={value} onChange={handleChange} style={{height: '92vh', padding: 0, margin: 0}} />
+    return <ReactQuill placeholder={placeholder} modules={modules} value={value} onChange={handleChange} style={{height: height, padding: 0, margin: 0, ...styles}} />
 }
 
 export default App
