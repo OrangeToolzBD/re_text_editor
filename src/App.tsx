@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-empty */
@@ -39,6 +40,7 @@ function App() {
     const handleChange = (value: string) => {
         try {
           window.postMessage(value);
+          // @ts-ignore
           window?.ReactNativeWebView?.postMessage(value);
         } catch (_) {}
         setValue(value);
