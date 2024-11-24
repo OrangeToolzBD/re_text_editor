@@ -12,7 +12,7 @@ const modules = {
 };
 
 function App() {
-    const [height, setHeight] = useState('200px');
+    const [height, setHeight] = useState('100vh');
     const [placeholder, setPlaceholder] = useState('Type your message here');
     const [value, setValue] = useState('');
     const [styles, setStyles] = useState({});
@@ -26,7 +26,7 @@ function App() {
      useLayoutEffect(() => {
         setValue(_value || '');
         setPlaceholder(_placeholder || 'Type your message here');
-        setHeight(_height || '200px');
+        setHeight(_height || '100vh');
         try{
           if(_styles){
             setStyles(JSON.parse(_styles));
@@ -44,7 +44,7 @@ function App() {
         setValue(value);
     };
 
-    return <ReactQuill placeholder={placeholder} modules={modules} value={value} onChange={handleChange} style={{height: height, padding: 0, margin: 0, ...styles}} />
+    return <ReactQuill placeholder={placeholder} modules={modules} value={value} onChange={handleChange} style={{height: `calc(${height} - 41.6px)`, padding: 0, margin: 0, ...styles}} />
 }
 
 export default App
