@@ -23,6 +23,10 @@ function App() {
     const _height = params.get("height");
     const _placeholder = params.get("placeholder");
     const _styles = params.get("styles");
+    const _dir = params.get("dir");
+    if(_dir){
+      document.body.dir = _dir
+    }
 
      useLayoutEffect(() => {
         setValue(_value || '');
